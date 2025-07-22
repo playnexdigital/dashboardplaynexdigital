@@ -2,518 +2,218 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dashboard | Playnex Digital</title>
-  <link rel="stylesheet" href="https://unpkg.com/lucide@latest/dist/umd/lucide.css" />
-  <script src="https://unpkg.com/lucide@latest"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Oswald&family=Poppins&display=swap" rel="stylesheet">
-
+  <title>Login | Playnex Digital</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@600&family=Poppins&display=swap" rel="stylesheet" />
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
     html, body {
+      margin: 0;
+      padding: 0;
       height: 100%;
       font-family: 'Poppins', sans-serif;
-      background-color: #0a0a0a;
-      color: #e5e7eb;
+      background-color: #000;
+      color: white;
+      overflow: hidden;
     }
-    body { display: flex; overflow: hidden; }
-
-    .mobile-header {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      background-color: #0a0a0a;
-      padding: 10px 15px;
-      z-index: 999;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px solid #1c1c1c;
-    }
-
-    .mobile-header .logo {
-      width: 70px;
-      margin-left: 10px;
-    }
-
-    .menu-toggle {
-      background: none;
-      border: none;
-      color: #fff;
-      font-size: 24px;
-      cursor: pointer;
-    }
-
-    .sidebar {
-      width: 250px;
-      background-color: #0a0a0a;
+    * { box-sizing: border-box; }
+    .main-container {
       display: flex;
-      flex-direction: column;
-      height: 100vh;
-      position: relative;
-      transition: transform 0.3s ease;
-    }
-
-    .sidebar.mobile-hidden {
-      transform: translateX(-100%);
-      position: fixed;
-      top: 0;
-      left: 0;
-      height: 100vh;
-      z-index: 998;
-    }
-
-    .sidebar.active {
-      transform: translateX(0);
-      display: flex;
-    }
-
-    .overlay {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background-color: rgba(0, 0, 0, 0.6);
-      z-index: 997;
-    }
-
-    .overlay.active {
-      display: block;
-    }
-
-    .divider {
-      width: 1.5px;
-      background-color: #1c1c1c;
-      height: 100vh;
-    }
-
-    .sidebar-scroll {
-      overflow-y: auto;
-      flex-grow: 1;
-      padding-top: 30px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding-bottom: 100px;
-    }
-
-    .sidebar-scroll::-webkit-scrollbar {
-      width: 5px;
-    }
-
-    .sidebar-scroll:hover::-webkit-scrollbar-thumb {
-      background-color: #333;
-    }
-
-    .logo {
-      width: 90px;
-      margin-bottom: 20px;
-      opacity: 0.9;
-    }
-
-    .profile-box {
-      background: rgba(255, 255, 255, 0.03);
-      padding: 10px 12px;
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 90%;
-      margin: 15px auto 25px auto;
-      gap: 10px;
-    }
-
-    .profile-box img {
-      width: 42px;
-      height: 42px;
-      border-radius: 50%;
-    }
-
-    .profile-info {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      justify-content: center;
-      flex: 1;
-    }
-
-    .profile-info h4 {
-      font-size: 14px;
-      font-weight: normal;
-      text-align: left;
-    }
-
-    .plan-info {
-      font-size: 13px;
-      color: #bbb;
-      text-align: left;
-    }
-
-    .nav-links {
-      list-style: none;
       width: 100%;
+      height: 100vh;
+    }
+    .form-section {
+      flex: 1;
+      background-color: #111;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      overflow-y: auto;
+    }
+    .form-content {
+      width: 100%;
+      max-width: 560px;
+      padding: 50px 30px 70px 30px;
+    }
+    .logo-box {
+      text-align: center;
       margin-top: 10px;
     }
-
-    .nav-links li { width: 100%; }
-
-    .nav-links a {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 12px 25px;
-      color: #cbd5e1;
-      text-decoration: none;
-      font-size: 14px;
+    .logo-box img {
+      max-width: 110px;
+      height: auto;
     }
-
-    .nav-links a:hover {
-      background-color: #1a1a1a;
-    }
-
-    .nav-links a.active {
-      background-color: #1f2937;
+    h1 {
+      font-family: 'Oswald', sans-serif;
+      font-weight: 600;
+      text-transform: uppercase;
       color: #00ddff;
-    }
-
-    .submenu {
-      display: none;
-      flex-direction: column;
-      background-color: #111;
-    }
-
-    .submenu a {
-      padding: 8px 25px 8px 45px;
-      font-size: 13px;
-      position: relative;
-    }
-
-    .submenu a::before {
-      content: "•";
-      position: absolute;
-      left: 30px;
-      color: inherit;
-      font-size: 16px;
-    }
-
-    .toggle::after {
-      content: "▸";
-      margin-left: auto;
-      transition: 0.3s;
-    }
-
-    .toggle.active::after {
-      transform: rotate(90deg);
-    }
-
-    .compare-box {
-      margin: 20px 25px 10px 25px;
-      background-color: #111;
-      border: 1px solid #00ddff22;
-      border-radius: 8px;
-      padding: 15px;
-      width: calc(100% - 50px);
-      text-align: left;
-    }
-
-    .compare-box h3 {
-      font-size: 14px;
-      color: #00ddff;
-      margin-bottom: 6px;
-    }
-
-    .compare-box p {
-      font-size: 12px;
-      color: #ccc;
-      margin-bottom: 10px;
-      line-height: 1.5;
-    }
-
-    .compare-box a {
-      display: block;
       text-align: center;
-      color: #00ddff;
-      font-size: 13px;
-      text-decoration: none;
+      margin-top: 10px;
+      margin-bottom: 30px;
     }
-
-    .support-link {
-      margin-top: auto;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 14px 25px;
-      color: #cbd5e1;
-      font-size: 14px;
+    form {
+      width: 100%;
+    }
+    label {
+      display: block;
+      margin-top: 15px;
       font-weight: 500;
-      text-decoration: none;
-      margin-bottom: 12px;
-      margin-right: 6px;
     }
-
-    .support-link:hover {
-      background-color: #1f2937;
+    input {
+      width: 100%;
+      padding: 12px;
+      margin-top: 5px;
+      border-radius: 6px;
+      border: 1px solid #444;
+      background-color: #222;
+      color: white;
+      font-size: 14px;
+    }
+    input.invalid {
+      border-color: red;
+    }
+    input.valid {
+      border-color: #00ddff;
+    }
+    .toggle-password {
+      position: absolute;
+      top: 50%;
+      right: 10px;
+      transform: translateY(-50%);
+      cursor: pointer;
+      font-size: 13px;
+      color: #666;
+      background: none;
+      border: none;
+    }
+    .toggle-password.clicked {
       color: #00ddff;
     }
-
-    .main {
-      flex-grow: 1;
-      background-color: #0a0a0a;
-      padding: 30px;
-      overflow-y: auto;
-    }
-
-    .topbar {
-      display: flex;
-      justify-content: flex-end;
-      margin-bottom: 10px;
-    }
-
-    .profile-dropdown {
+    .input-wrapper {
       position: relative;
     }
-
-    .profile-icon {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      cursor: pointer;
-    }
-
-    .dropdown-menu {
-      position: absolute;
-      top: 45px;
-      right: 0;
-      background-color: #1f2937;
-      border-radius: 6px;
-      display: none;
-      flex-direction: column;
-      width: 140px;
-    }
-
-    .dropdown-menu a {
-      padding: 10px;
-      font-size: 14px;
-      color: #fff;
-      text-decoration: none;
-    }
-
-    .dropdown-menu a:hover {
-      background-color: #374151;
-    }
-
-    .dashboard-header {
-      margin-bottom: 25px;
-    }
-
-    .dashboard-header h2 {
-      font-size: 22px;
-    }
-
-    .dashboard-header p {
-      font-size: 14px;
-      color: #aaa;
+    .error-note {
+      font-size: 12px;
+      color: red;
       margin-top: 5px;
+      display: none;
     }
-
-    .stat-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 20px;
-    }
-
-    .stat-card {
-      background-color: #111;
-      border-radius: 8px;
-      padding: 15px;
-    }
-
-    .stat-card h4 {
-      font-size: 14px;
-      margin-bottom: 5px;
-    }
-
-    .stat-card p {
-      font-size: 20px;
+    .login-btn {
+      background-color: #00ddff;
+      color: #000;
       font-weight: bold;
-      margin-bottom: 10px;
+      padding: 12px 25px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      display: block;
+      margin: 25px auto 0 auto;
+      font-size: 15px;
     }
-
-    canvas {
-      width: 100% !important;
-      height: 70px !important;
+    .signup-link {
+      text-align: center;
+      margin-top: 25px;
+      font-size: 14px;
     }
-
-    @media (max-width: 768px) {
-      body { flex-direction: column; }
-      .divider { display: none; }
-      .main { padding-top: 75px; }
-      .mobile-header { display: flex; }
-      .sidebar { display: none; }
-      .sidebar.active { display: flex; }
+    .signup-link a {
+      color: #00ddff;
+      text-decoration: none;
+      margin-left: 5px;
+    }
+    @media screen and (max-width: 768px) {
+      .main-container {
+        flex-direction: column;
+      }
+      .form-section {
+        padding: 20px;
+        height: 100vh;
+      }
+      .image-section {
+        display: none;
+      }
+    }
+    .image-section {
+      flex: 1;
+      background-color: #000;
+    }
+    .image-section img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top center;
     }
   </style>
 </head>
 <body>
-  <div class="mobile-header">
-    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
-    <img src="https://spmusiczone.com/wp-content/uploads/2025/07/Playnex-Digital-Logo.png" class="logo" alt="Logo" />
-    <div class="profile-dropdown">
-      <img src="https://www.w3schools.com/howto/img_avatar.png" class="profile-icon" onclick="toggleDropdown()" />
-      <div class="dropdown-menu" id="dropdownMenu">
-        <a href="#">Home</a>
-        <a href="#">My Profile</a>
-        <a href="#" onclick="logout()">Logout</a>
-      </div>
-    </div>
-  </div>
-
-  <div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
-
-  <div class="sidebar mobile-hidden" id="sidebar">
-    <div class="sidebar-scroll">
-      <img src="https://spmusiczone.com/wp-content/uploads/2025/07/Playnex-Digital-Logo.png" class="logo" alt="Logo" />
-      <div class="profile-box" id="profileBox">
-        <img src="https://www.w3schools.com/howto/img_avatar.png" alt="Profile" />
-        <div class="profile-info">
-          <h4 id="artistName">Artist Name</h4>
-          <div class="plan-info" id="planName">No Plan Selected</div>
+  <div class="main-container">
+    <div class="form-section">
+      <div class="form-content">
+        <div class="logo-box">
+          <img src="https://spmusiczone.com/wp-content/uploads/2025/07/Playnex-Digital-Logo.png" alt="Playnex Logo" />
         </div>
-      </div>
-      <ul class="nav-links">
-        <li><a href="#" class="active"><i data-lucide="layout-dashboard"></i> Dashboard</a></li>
-        <li><a href="#"><i data-lucide="bar-chart-3"></i> Analytics</a></li>
-        <li>
-          <a href="javascript:void(0)" class="toggle" onclick="toggleSubmenu('releasesSub')"><i data-lucide="disc"></i> Releases</a>
-          <div class="submenu" id="releasesSub">
-            <a href="#">Create New Release</a>
-            <a href="#">My Releases</a>
+        <h1>Login</h1>
+        <form id="loginForm" novalidate>
+          <label for="email">Email Address <span>*</span></label>
+          <input type="email" id="email" required />
+
+          <label for="password">Password <span>*</span></label>
+          <div class="input-wrapper">
+            <input type="password" id="password" required />
+            <button type="button" class="toggle-password" onclick="togglePassword('password', this)">Show</button>
           </div>
-        </li>
-        <li><a href="#"><i data-lucide="wallet"></i> Bank</a></li>
-        <li>
-          <a href="javascript:void(0)" class="toggle" onclick="toggleSubmenu('fanlinkSub')"><i data-lucide="link"></i> Fan Links</a>
-          <div class="submenu" id="fanlinkSub">
-            <a href="#">Presaves</a>
-            <a href="#">Master Link</a>
-            <a href="#">Link in Bio</a>
-          </div>
-        </li>
-        <li><a href="#"><i data-lucide="list-music"></i> Playlist Pitching</a></li>
-        <div class="compare-box">
-          <h3>⭐ STAR ARTIST</h3>
-          <p>Upgrade now to unlock your true potential with our extended features.</p>
-          <a href="#">Compare Plan</a>
-        </div>
-      </ul>
-    </div>
-    <a href="#" class="support-link"><i data-lucide="life-buoy"></i> Support Center</a>
-  </div>
+          <div class="error-note" id="loginError">Invalid email or password.</div>
 
-  <div class="divider"></div>
+          <button type="submit" class="login-btn">Login</button>
+        </form>
 
-  <div class="main">
-    <div class="topbar">
-      <div class="profile-dropdown">
-        <img src="https://www.w3schools.com/howto/img_avatar.png" class="profile-icon" onclick="toggleDropdown()" />
-        <div class="dropdown-menu" id="dropdownMenuDesktop">
-          <a href="#">Home</a>
-          <a href="#">My Profile</a>
-          <a href="#" onclick="logout()">Logout</a>
+        <div class="signup-link">
+          I need an account?
+          <a href="https://dashboard.playnexdigital.com/register" target="_blank">Sign Up</a>
         </div>
       </div>
     </div>
-
-    <div class="dashboard-header">
-      <h2>Welcome to Dashboard</h2>
-      <p>Manage your music, releases, analytics and more from one place.</p>
-    </div>
-
-    <div class="stat-grid">
-      <div class="stat-card">
-        <h4>Total Streams</h4>
-        <p>2,34,000</p>
-        <canvas id="chart1"></canvas>
-      </div>
-      <div class="stat-card">
-        <h4>Total Earnings</h4>
-        <p>₹85,200</p>
-        <canvas id="chart2"></canvas>
-      </div>
-      <div class="stat-card">
-        <h4>Releases</h4>
-        <p>124</p>
-        <canvas id="chart3"></canvas>
-      </div>
-      <div class="stat-card">
-        <h4>Fanlink Clicks</h4>
-        <p>7,890</p>
-        <canvas id="chart4"></canvas>
-      </div>
+    <div class="image-section">
+      <img src="https://spmusiczone.com/wp-content/uploads/2025/07/form-image.png" alt="Login Side Image" loading="lazy" />
     </div>
   </div>
 
   <script>
-    lucide.createIcons();
+    const form = document.getElementById('loginForm');
+    const email = document.getElementById('email');
+    const password = document.getElementById('password');
+    const loginError = document.getElementById('loginError');
 
-    const artist = localStorage.getItem("artistName");
-    const plan = localStorage.getItem("selectedPlan");
-    if (artist && plan) {
-      document.getElementById("artistName").innerText = artist;
-      document.getElementById("planName").innerText = plan;
+    function togglePassword(id, btn) {
+      const field = document.getElementById(id);
+      field.type = field.type === 'password' ? 'text' : 'password';
+      btn.classList.toggle('clicked');
     }
 
-    function toggleSidebar() {
-      const sidebar = document.getElementById("sidebar");
-      const overlay = document.getElementById("overlay");
-      sidebar.classList.toggle("active");
-      overlay.classList.toggle("active");
+    email.addEventListener('blur', () => validateField(email));
+    password.addEventListener('blur', () => validateField(password));
+
+    function validateField(input) {
+      if (!input.value.trim()) {
+        input.classList.add('invalid');
+        input.classList.remove('valid');
+      } else {
+        input.classList.remove('invalid');
+        input.classList.add('valid');
+      }
     }
 
-    function toggleDropdown() {
-      const dropdown1 = document.getElementById("dropdownMenu");
-      const dropdown2 = document.getElementById("dropdownMenuDesktop");
-      dropdown1.style.display = dropdown1.style.display === "flex" ? "none" : "flex";
-      dropdown2.style.display = dropdown2.style.display === "flex" ? "none" : "flex";
-    }
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      validateField(email);
+      validateField(password);
 
-    function logout() {
-      localStorage.clear();
-      window.location.href = "login.html";
-    }
-
-    function toggleSubmenu(id) {
-      const submenu = document.getElementById(id);
-      const toggle = submenu.previousElementSibling;
-      submenu.style.display = submenu.style.display === "flex" ? "none" : "flex";
-      toggle.classList.toggle("active");
-    }
-
-    const dummyData = {
-      labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
-      datasets: [{
-        label: "Dummy",
-        data: [12, 19, 10, 15, 22, 18],
-        borderColor: "#00ddff",
-        borderWidth: 2,
-        fill: false,
-        tension: 0.3,
-      }]
-    };
-
-    const chartOptions = {
-      plugins: { legend: { display: false } },
-      scales: { x: { display: false }, y: { display: false } }
-    };
-
-    new Chart(document.getElementById("chart1"), { type: "line", data: dummyData, options: chartOptions });
-    new Chart(document.getElementById("chart2"), { type: "line", data: dummyData, options: chartOptions });
-    new Chart(document.getElementById("chart3"), { type: "line", data: dummyData, options: chartOptions });
-    new Chart(document.getElementById("chart4"), { type: "line", data: dummyData, options: chartOptions });
+      if (!email.classList.contains('invalid') && !password.classList.contains('invalid')) {
+        alert("Login successful!");
+        form.reset();
+      } else {
+        loginError.style.display = "block";
+      }
+    });
   </script>
 </body>
 </html>
