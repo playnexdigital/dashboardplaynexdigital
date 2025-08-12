@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Login | Playnex Digital</title>
+  <link rel="icon" href="images/favicon.png" type="image/favicon.png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&family=Oswald&display=swap" rel="stylesheet" />
+  <style>
+    html, body {
+      margin: 0; padding: 0; height: 100%;
+      font-family: 'Poppins', sans-serif;
+      background-color: #000; color: white;
+      overflow: hidden;
+    }
+    * { box-sizing: border-box; }
+    .main-container { display: flex; width: 100%; height: 100vh; }
+    .form-section {
+      flex: 1;
+      background-color: #111;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      overflow-y: auto;
+      justify-content: flex-start;
+      padding-top: 80px;
+    }
+    .form-content {
+      width: 100%; max-width: 560px;
+      padding: 10px 30px 60px 30px;
+    }
+
+    .logo {
+      text-align: center;
+      margin-bottom: 5px;
+    }
+
+    .logo img {
+      height: 30px;
+      max-width: 100%;
+    }
+
+    h1 {
+      font-family: 'Oswald', sans-serif;
+      font-weight: 600;
+      color: #fff;
+      text-align: center;
+      margin-top: 35px;
+      margin-bottom: 30px;
+      font-size: 32px;
+    }
+    form { width: 100%; }
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: 500;
+    }
+    label span.required {
+      color: #ff4444;
+      margin-left: 5px;
+    }
+    .input-wrapper {
+      position: relative;
+    }
+    input {
+      width: 100%; padding: 12px; margin-top: 5px;
+      border-radius: 6px; border: 1px solid #444;
+      background-color: #222; color: white; font-size: 14px;
+    }
+    input::placeholder {
+      color: rgba(255, 255, 255, 0.5);
+    }
+    input.invalid { border-color: #ff4444; }
+    input.valid { border-color: white; }
+
+    .toggle-password {
+      position: absolute;
+      top: 52%;
+      right: 10px;
+      transform: translateY(-50%);
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 0;
+      height: 24px;
+      width: 36px;
+    }
+    .toggle-password svg {
+      width: 28px;
+      height: 24px;
+      stroke: rgba(255, 255, 255, 0.7);
+      stroke-width: 2.2;
+      fill: none;
+      transition: stroke 0.3s ease;
+    }
+    .toggle-password:hover svg {
+      stroke: #fff;
+    }
+    .toggle-password.active svg {
+      stroke: #fff;
+    }
+    .slash {
+      display: none;
+      stroke: rgba(255, 255, 255, 0.7);
+      stroke-width: 2.2;
+    }
+    .toggle-password.active .slash {
+      display: block;
+    }
+
+    .error-note {
+      font-size: 13px;
+      color: rgba(255, 68, 68, 0.9);
+      margin-top: 5px;
+      display: none;
+    }
+
+    .login-btn {
+      background-color: #00ddff; color: #000;
+      font-weight: bold; padding: 12px 25px;
+      border: none; border-radius: 6px;
+      cursor: pointer; display: block;
+      margin: 20px auto 0 auto; font-size: 15px;
+    }
+
+    .login-link {
+      text-align: center; margin-top: 25px;
+      font-size: 14px;
+    }
+    .login-link a {
+      color: #00ddff; text-decoration: none; margin-left: 5px;
+
+    }
+  .forgot-password-link {
+  margin-top: 6px;
+  text-align: left;
+  font-size: 12px;
+  border-bottom: none;
+}
+
+.forgot-password-link a {
+  color: rgba(255, 255, 255, 0.6);
+  text-decoration: none;
+  transition: color 0.3s ease;
+  border-bottom: none;
+}
+
+.forgot-password-link a:hover {
+  color: rgba(255, 255, 255, 0.9);
+  text-decoration: none;
+}
+
+    @media screen and (max-width: 768px) {
+      .main-container { flex-direction: column; }
+      .form-section { padding: 20px; height: 100vh; }
+      .image-section { display: none; }
+    }
+
+    .image-section {
+      flex: 1; background-color: #000;
+    }
+
+    .image-section img {
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: top center;
+    }
+  </style>
+</head>
+<body>
+  <div class="main-container">
+    <div class="form-section">
+      <div class="form-content">
+        <div class="logo">
+          <a href="/"><img src="images/logo.png" alt="Playnex Digital Logo" /></a>
+        </div>
+        <h1>Login to your account</h1>
+        <form id="loginForm" novalidate>
+          <label for="email">Email Address<span class="required">*</span></label>
+          <input type="email" id="email" placeholder="Enter your email" required />
+
+          <label for="password">Password<span class="required">*</span></label>
+          <div class="input-wrapper">
+            <input type="password" id="password" placeholder="Enter your password" required />
+            <button type="button" class="toggle-password" onclick="togglePassword('password', this)">
+              <svg viewBox="0 0 24 24">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                <path d="M12 8a4 4 0 1 1 0 8 4 4 0 0 1 0-8z"/>
+                <line class="slash" x1="4" y1="2" x2="20" y2="22" />
+              </svg>
+            </button>
+          </div>
+
+          <div class="error-note" id="loginError">Please enter valid email and password.</div>
+
+          <button type="submit" class="login-btn">Login</button>
+
+          <div class="forgot-your-password-link">
+          <a href="https://dashboard.spmusiczone.com/forgot-your-password">Forgot your password?</a>
+          </div>
+
+        </form>
+        <div class="login-link">
+          I need an account? <a href="https://dashboard.spmusiczone.com/signup">Create one</a>
+        </div>
+      </div>
+    </div>
+    <div class="image-section">
+      <img src="images/form-image.png" alt="Form Image" />
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById('loginForm');
+    const email = document.getElementById('email');
+    const password = document.getElementById('password');
+    const loginError = document.getElementById('loginError');
+
+    function validateEmail(email) {
+      return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email);
+    }
+
+    function validatePassword(password) {
+      return password.length > 0;
+    }
+
+    function togglePassword(id, btn) {
+      const field = document.getElementById(id);
+      const isVisible = field.type === 'text';
+      field.type = isVisible ? 'password' : 'text';
+      btn.classList.toggle('active', !isVisible);
+    }
+
+    function validateField(input) {
+      if (!input.value.trim()) {
+        input.classList.add('invalid');
+        input.classList.remove('valid');
+      } else {
+        input.classList.remove('invalid');
+        input.classList.add('valid');
+      }
+    }
+
+    email.addEventListener('blur', () => validateField(email));
+    password.addEventListener('blur', () => validateField(password));
+
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+
+      validateField(email);
+      validateField(password);
+
+      const emailValid = validateEmail(email.value.trim());
+      const passwordValid = validatePassword(password.value.trim());
+
+      if (emailValid && passwordValid) {
+        loginError.style.display = 'none';
+        alert("Logged in successfully!");
+        form.submit(); // or your login logic here
+      } else {
+        loginError.style.display = 'block';
+      }
+    });
+  </script>
+</body>
+</html>
