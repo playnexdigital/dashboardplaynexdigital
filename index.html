@@ -1,326 +1,544 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Sulexa / Playnex Dashboard</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard | Playnex Digital</title>
+  <link rel="stylesheet" href="https://unpkg.com/lucide@latest/dist/umd/lucide.css" />
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald&family=Poppins&display=swap" rel="stylesheet">
   <style>
-    :root{
-      --bg:#0b0b0b;
-      --panel:#111;
-      --muted:#bfc6c8;
-      --accent:#00ddff;
-      --accent-dark:#00b8d4;
-      --card-shadow: 0 6px 24px rgba(0,221,255,0.06);
-      --radius:12px;
-      --maxw:1100px;
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body {
+      height: 100%;
+      font-family: 'Poppins', sans-serif;
+      background-color: #0a0a0a;
+      color: #e5e7eb;
     }
-    html,body{height:100%;margin:0;font-family:Inter,Roboto,system-ui,-apple-system,Segoe UI,Arial;}
-    body{background:linear-gradient(180deg,#050505 0%, #0b0b0b 100%);color:#e6eef0;display:flex;align-items:flex-start;justify-content:center;padding:28px;}
-    .wrap{width:100%;max-width:var(--maxw);display:grid;grid-template-columns:260px 1fr;gap:20px;}
-    /* SIDEBAR */
-    .sidebar{background:var(--panel);border-radius:16px;padding:18px;box-shadow:var(--card-shadow);height:calc(100vh - 56px);position:sticky;top:28px;overflow:hidden;display:flex;flex-direction:column;}
-    .brand{display:flex;align-items:center;gap:12px;margin-bottom:18px;}
-    .logo{width:44px;height:44px;border-radius:10px;background:linear-gradient(90deg,var(--accent) 0%, #4fc3f7 100%);display:flex;align-items:center;justify-content:center;font-weight:700;color:#001;}
-    .brand h3{margin:0;font-size:16px;color:#fff}
-    .profile{display:flex;align-items:center;gap:12px;padding:10px;border-radius:10px;background:rgba(255,255,255,0.02);margin-bottom:14px}
-    .avatar{width:52px;height:52px;border-radius:10px;background:linear-gradient(120deg,#222,#111);display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--accent)}
-    .profile .meta{font-size:13px}
-    .profile .meta .name{color:#fff;font-weight:600}
-    .plan-box{margin-top:10px;padding:10px;border-radius:10px;background:rgba(255,255,255,0.03);box-shadow: 0 4px 12px rgba(0,0,0,0.6);border:1px solid rgba(0,221,255,0.06)}
-    .plan-box small{display:block;color:var(--muted);font-size:12px}
-    .menu{margin-top:14px;overflow:auto;padding-right:6px}
-    .menu a{display:flex;align-items:center;gap:10px;padding:10px;border-radius:8px;color:rgba(255,255,255,0.85);text-decoration:none;margin-bottom:6px}
-    .menu a:hover{background:linear-gradient(90deg, rgba(0,221,255,0.06), rgba(0,0,0,0.04));color:#fff}
-    .menu .dot{width:8px;height:8px;border-radius:50%;background:#9aa;opacity:0.9;margin-right:6px}
-    .support{margin-top:auto;padding-top:10px;border-top:1px dashed rgba(255,255,255,0.03)}
-    .support a{color:#fff;text-decoration:none;font-weight:600}
-    /* MAIN */
-    .main{min-height:80vh;background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);border-radius:16px;padding:18px;box-shadow:var(--card-shadow);overflow:hidden}
-    .topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px}
-    .search{flex:1;display:flex;align-items:center;gap:8px;background:rgba(255,255,255,0.02);padding:8px 12px;border-radius:10px}
-    .search input{flex:1;background:transparent;border:none;outline:none;color:#cfe;}
-    .user-actions{display:flex;gap:10px;align-items:center}
-    .btn{background:var(--accent);color:#002;padding:8px 12px;border-radius:8px;border:none;cursor:pointer;font-weight:700}
-    .btn.ghost{background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--muted)}
-    /* Dashboard content */
-    .grid{display:grid;grid-template-columns:1fr 320px;gap:18px}
-    .card{background:rgba(255,255,255,0.02);padding:18px;border-radius:12px}
-    .welcome{display:flex;align-items:center;justify-content:space-between;gap:12px}
-    .user-card{display:flex;align-items:center;gap:14px}
-    .user-card .avatar-lg{width:64px;height:64px;border-radius:12px;background:linear-gradient(120deg,#0b0b0b,#111);display:flex;align-items:center;justify-content:center;font-weight:800;color:var(--accent);font-size:20px}
-    .stats{display:flex;gap:12px;margin-top:14px}
-    .stat{flex:1;padding:12px;border-radius:10px;background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));text-align:center}
-    .stat h4{margin:0;color:var(--accent);font-size:18px}
-    .stat p{margin:6px 0 0;color:var(--muted);font-size:13px}
-    /* Responsive */
-    @media (max-width:900px){
-      .wrap{grid-template-columns:1fr; padding:12px;}
-      .sidebar{position:relative;height:auto;order:2}
-      .main{order:1}
-      .grid{grid-template-columns:1fr}
+    body { display: flex; overflow: hidden; }
+
+    .mobile-header {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background-color: #0a0a0a;
+      padding: 10px 15px;
+      z-index: 999;
+      align-items: center;
+      border-bottom: 1px solid #1c1c1c;
+    }
+
+    .mobile-header .logo {
+  height: 25px !important;
+  width: auto;
+  margin-left: 30px;
+  object-fit: contain;
+  display: block;
+}
+
+.sidebar .logo {
+  height: 25px;
+  width: auto;
+  margin-bottom: 20px;
+  opacity: 0.9;
+}
+    
+     .menu-toggle {
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 24px;
+      cursor: pointer;
+    }
+
+    .mobile-header .header-right {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .sidebar {
+      width: 250px;
+      background-color: #0a0a0a;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      position: relative;
+      transition: transform 0.3s ease;
+    }
+
+    @media (max-width: 768px) {
+      .sidebar {
+        display: none;
+      }
+      .sidebar.active {
+        display: flex;
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 998;
+      }
+      .mobile-header {
+        display: flex;
+      }
+    }
+
+    .overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, 0.6);
+      z-index: 997;
+    }
+    .overlay.active { display: block; }
+
+    .divider {
+      width: 1.5px;
+      background-color: #1c1c1c;
+      height: 100vh;
+    }
+
+    .sidebar-scroll {
+      overflow-y: auto;
+      flex-grow: 1;
+      padding-top: 30px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-bottom: 100px;
+    }
+    .sidebar-scroll::-webkit-scrollbar {
+      width: 5px;
+    }
+    .sidebar-scroll:hover::-webkit-scrollbar-thumb {
+      background-color: #333;
+    }
+
+    .logo {
+      width: 90px;
+      margin-bottom: 20px;
+      opacity: 0.9;
+    }
+
+    .profile-box {
+      background: rgba(255, 255, 255, 0.03);
+      padding: 10px 12px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 90%;
+      margin: 15px auto 25px auto;
+      gap: 10px;
+    }
+
+    .profile-box img {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+    }
+
+    .profile-info {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+      flex: 1;
+    }
+
+    .profile-info h4 {
+      font-size: 14px;
+      font-weight: normal;
+      text-align: left;
+    }
+
+    .plan-info {
+      font-size: 13px;
+      color: #bbb;
+      text-align: left;
+    }
+
+    .nav-links {
+      list-style: none;
+      width: 100%;
+      margin-top: 10px;
+    }
+
+    .nav-links li { width: 100%; }
+
+    .nav-links a {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 25px;
+      color: #cbd5e1;
+      text-decoration: none;
+      font-size: 14px;
+      transition: background-color 0.3s ease;
+    }
+
+    .nav-links a:hover {
+      background-color: #1f2937;
+    }
+
+    .nav-links a.active {
+      background-color: #1f2937;
+      color: #00ddff;
+    }
+
+    .submenu {
+      overflow: hidden;
+      max-height: 0;
+      flex-direction: column;
+      background-color: #111;
+      transition: max-height 0.4s ease;
+    }
+
+    .toggle.active + .submenu {
+      max-height: 200px;
+    }
+
+    .submenu a {
+      padding: 8px 25px 8px 45px;
+      font-size: 13px;
+      position: relative;
+    }
+
+    .submenu a::before {
+      content: "•";
+      position: absolute;
+      left: 30px;
+      color: inherit;
+      font-size: 16px;
+    }
+
+    .toggle::after {
+      content: "▸";
+      margin-left: auto;
+      transition: 0.3s;
+    }
+
+    .toggle.active::after {
+      transform: rotate(90deg);
+    }
+
+    .compare-box {
+      margin: 20px 25px 10px 25px;
+      background-color: #111;
+      border: 1px solid #00ddff22;
+      border-radius: 8px;
+      padding: 15px;
+      width: calc(100% - 50px);
+      text-align: left;
+    }
+
+    .compare-box:hover {
+      background-color: #1a1a1a;
+    }
+
+    .compare-box h3 {
+      font-size: 14px;
+      color: #00ddff;
+      margin-bottom: 6px;
+    }
+
+    .compare-box p {
+      font-size: 12px;
+      color: #ccc;
+      margin-bottom: 10px;
+      line-height: 1.5;
+    }
+
+    .compare-box a {
+      display: block;
+      text-align: center;
+      color: #00ddff;
+      font-size: 13px;
+      text-decoration: none;
+    }
+
+    .support-link {
+      margin-top: auto;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 25px;
+      color: #cbd5e1;
+      font-size: 14px;
+      font-weight: 500;
+      text-decoration: none;
+      margin-bottom: 12px;
+      margin-right: 6px;
+    }
+
+    .support-link:hover {
+      background-color: #1f2937;
+      color: #00ddff;
+    }
+    .main {
+      flex-grow: 1;
+      background-color: #0a0a0a;
+      padding: 30px;
+      overflow-y: auto;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 10px;
+    }
+
+    .profile-dropdown {
+      position: relative;
+    }
+
+    .profile-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+
+    .dropdown-menu {
+      position: absolute;
+      top: 45px;
+      right: 0;
+      background-color: #1f2937;
+      border-radius: 6px;
+      display: none;
+      flex-direction: column;
+      width: 140px;
+      z-index: 1000;
+    }
+
+    .dropdown-menu a {
+      padding: 10px;
+      font-size: 14px;
+      color: #fff;
+      text-decoration: none;
+    }
+
+    .dropdown-menu a:hover {
+      background-color: #374151;
+    }
+
+    .dashboard-header {
+      margin-bottom: 25px;
+    }
+
+    .dashboard-header h2 {
+      font-size: 22px;
+    }
+
+    .dashboard-header p {
+      font-size: 14px;
+      color: #aaa;
+      margin-top: 5px;
+    }
+
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+    }
+
+    .stat-card {
+      background-color: #111;
+      border-radius: 8px;
+      padding: 15px;
+    }
+
+    .stat-card h4 {
+      font-size: 14px;
+      margin-bottom: 5px;
+    }
+
+    .stat-card p {
+      font-size: 20px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    canvas {
+      width: 100% !important;
+      height: 70px !important;
     }
   </style>
 </head>
 <body>
-
-  <div class="wrap">
-    <!-- SIDEBAR -->
-    <aside class="sidebar">
-      <div class="brand">
-        <div class="logo">SM</div>
-        <div>
-          <h3>Sulexa / Playnex</h3>
-          <small style="color:var(--muted)">Dashboard</small>
+  <!-- ✅ Mobile Header with toggle + logo + profile -->
+  <div class="mobile-header">
+    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+    <img src="images/logo.png" class="logo" alt="Logo" />
+    <div class="header-right">
+      <div class="profile-dropdown">
+        <img src="https://www.w3schools.com/howto/img_avatar.png" class="profile-icon" onclick="toggleDropdown()" />
+        <div class="dropdown-menu" id="dropdownMenu">
+          <a href="#">Home</a>
+          <a href="#">My Profile</a>
+          <a href="https://dashboard.spmusiczone.com/login" onclick="logout()">Logout</a>
         </div>
       </div>
-
-      <div class="profile">
-        <div class="avatar" id="sideAvatar">S</div>
-        <div class="meta">
-          <div class="name" id="sideName">Loading...</div>
-          <div style="font-size:12px;color:var(--muted)" id="sideEmail">...</div>
-        </div>
-      </div>
-
-      <div class="plan-box" id="planBox">
-        <small>Plan</small>
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-top:6px">
-          <strong id="planName">No Plan Selected</strong>
-          <button class="btn ghost" id="upgradeBtn">Compare / Upgrade</button>
-        </div>
-        <div style="margin-top:8px;color:var(--muted);font-size:13px" id="planMeta">No active subscription</div>
-      </div>
-
-      <nav class="menu" id="menuList">
-        <a href="#" class="menu-item"><span class="dot"></span>Dashboard</a>
-        <a href="#" class="menu-item"><span class="dot"></span>Releases</a>
-        <a href="#" class="menu-item"><span class="dot"></span>Analytics</a>
-        <a href="#" class="menu-item"><span class="dot"></span>Playlists</a>
-        <a href="#" class="menu-item"><span class="dot"></span>Support Center</a>
-      </nav>
-
-      <div class="support">
-        <div style="display:flex;justify-content:space-between;align-items:center">
-          <a href="#" id="supportLink">Support Center</a>
-          <button class="btn" id="logoutBtnSidebar">Logout</button>
-        </div>
-      </div>
-    </aside>
-
-    <!-- MAIN CONTENT -->
-    <main class="main">
-      <div class="topbar">
-        <div class="search">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M21 21l-4.35-4.35" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
-          <input placeholder="Search releases, artists, invoices..." id="searchInput" />
-        </div>
-
-        <div class="user-actions">
-          <div style="text-align:right;">
-            <div style="font-weight:700" id="topName">—</div>
-            <div style="font-size:12px;color:var(--muted)" id="topEmail">—</div>
-          </div>
-          <button class="btn" id="logoutBtn">Logout</button>
-        </div>
-      </div>
-
-      <section class="grid">
-        <div>
-          <div class="card welcome">
-            <div class="user-card">
-              <div class="avatar-lg" id="mainAvatar">S</div>
-              <div>
-                <h2 id="welcomeText">Welcome, Loading...</h2>
-                <p style="color:var(--muted);margin-top:8px" id="welcomeEmail">Email loading...</p>
-              </div>
-            </div>
-
-            <div style="text-align:right">
-              <small style="color:var(--muted)">Member since</small>
-              <div style="font-weight:700">Jan 1, 2025</div>
-            </div>
-          </div>
-
-          <div class="card" style="margin-top:14px">
-            <h3 style="margin:0 0 12px 0">Your quick stats</h3>
-            <div class="stats">
-              <div class="stat"><h4 id="statReleases">0</h4><p>Releases</p></div>
-              <div class="stat"><h4 id="statStreams">0</h4><p>Streams (est.)</p></div>
-              <div class="stat"><h4 id="statEarnings">₹0</h4><p>Pending Payout</p></div>
-            </div>
-          </div>
-
-          <div class="card" style="margin-top:14px">
-            <h3 style="margin:0 0 12px 0">Recent activity</h3>
-            <div id="activityList" style="color:var(--muted);font-size:14px">No activity (dummy demo)</div>
-          </div>
-        </div>
-
-        <!-- RIGHT COLUMN -->
-        <aside>
-          <div class="card">
-            <h4 style="margin-top:0">Plan details</h4>
-            <div style="margin-top:8px;color:var(--muted)" id="planDetails">
-              Link a real billing API later. For demo, this shows localStorage or dummy API result.
-            </div>
-            <div style="margin-top:12px;display:flex;gap:8px">
-              <button class="btn" id="manageBilling">Manage</button>
-              <button class="btn ghost" id="downloadReport">Download Report</button>
-            </div>
-          </div>
-
-          <div class="card" style="margin-top:14px">
-            <h4 style="margin-top:0">Support</h4>
-            <p style="color:var(--muted)">Questions? Contact support or check docs.</p>
-            <button class="btn ghost" id="openSupport">Open Support</button>
-          </div>
-        </aside>
-
-      </section>
-    </main>
+    </div>
   </div>
 
-  <!-- Firebase SDK (modular) -->
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+  <div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
 
-    // ----- Replace below with your real Firebase config -----
-    const firebaseConfig = {
-      apiKey: "DUMMY_API_KEY",
-      authDomain: "dummy-project.firebaseapp.com",
-      projectId: "dummy-project",
-      storageBucket: "dummy-project.appspot.com",
-      messagingSenderId: "123456789",
-      appId: "1:123456789:web:abcdef123456"
-    };
-    // -------------------------------------------------------
+  <!-- ✅ Sidebar -->
+  <div class="sidebar" id="sidebar">
+    <div class="sidebar-scroll">
+      <img src="images/logo.png" class="logo" alt="Logo" />
+      <div class="profile-box" id="profileBox">
+        <img src="https://www.w3schools.com/howto/img_avatar.png" alt="Profile" />
+        <div class="profile-info">
+          <h4 id="artistName">Artist Name</h4>
+          <div class="plan-info" id="planName">No Plan Selected</div>
+        </div>
+      </div>
+      <ul class="nav-links">
+        <li><a href="#" class="active"><i data-lucide="layout-dashboard"></i> Dashboard</a></li>
+        <li><a href="#"><i data-lucide="bar-chart-3"></i> Analytics</a></li>
+        <li>
+          <a href="javascript:void(0)" class="toggle" onclick="toggleSubmenu('releasesSub')"><i data-lucide="disc"></i> Releases</a>
+          <div class="submenu" id="releasesSub">
+            <a href="#">Create New Release</a>
+            <a href="#">My Releases</a>
+          </div>
+        </li>
+        <li><a href="#"><i data-lucide="wallet"></i> Bank</a></li>
+        <li>
+          <a href="javascript:void(0)" class="toggle" onclick="toggleSubmenu('fanlinkSub')"><i data-lucide="link"></i> Fan Links</a>
+          <div class="submenu" id="fanlinkSub">
+            <a href="#">Presaves Link</a>
+            <a href="#">Master Link</a>
+            <a href="#">Link in Bio</a>
+          </div>
+        </li>
+        <li><a href="#"><i data-lucide="list-music"></i> Playlist Pitching</a></li>
+        <div class="compare-box">
+          <h3>⭐ STAR ARTIST</h3>
+          <p>Upgrade now to unlock your true potential with our extended features.</p>
+          <a href="https://spmusiczone.com/pricing">Compare Plan</a>
+        </div>
+      </ul>
+    </div>
+    <a href="#" class="support-link"><i data-lucide="life-buoy"></i> Support Center</a>
+  </div>
+  <div class="divider"></div>
 
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
+  <!-- ✅ Main Content -->
+  <div class="main">
+    <div class="topbar">
+      <div class="profile-dropdown">
+        <img src="https://www.w3schools.com/howto/img_avatar.png" class="profile-icon" onclick="toggleDropdown()" />
+        <div class="dropdown-menu" id="dropdownMenuDesktop">
+          <a href="#">Home</a>
+          <a href="#">My Profile</a>
+          <a href="https://dashboard.spmusiczone.com/login" onclick="logout()">Logout</a>
+        </div>
+      </div>
+    </div>
 
-    // Helper: set UI text safely
-    const $ = (id) => document.getElementById(id);
+    <div class="dashboard-header">
+      <h2>Welcome to Dashboard</h2>
+      <p>Manage your music, releases, analytics and more from one place.</p>
+    </div>
 
-    // Sign-out handlers
-    const doSignOut = () => {
-      signOut(auth).then(()=> {
-        // optional: clear any localStorage plan info on logout
-        // localStorage.removeItem('selectedPlan');
-        window.location.href = "auth.html"; // redirect back to login
-      }).catch(err => {
-        console.error("Signout error:", err);
-        alert("Logout failed, check console.");
-      });
-    };
-    $("logoutBtn").addEventListener("click", doSignOut);
-    $("logoutBtnSidebar").addEventListener("click", doSignOut);
+    <div class="stat-grid">
+      <div class="stat-card">
+        <h4>Total Streams</h4>
+        <p>2,34,000</p>
+        <canvas id="chart1"></canvas>
+      </div>
+      <div class="stat-card">
+        <h4>Total Earnings</h4>
+        <p>₹85,200</p>
+        <canvas id="chart2"></canvas>
+      </div>
+      <div class="stat-card">
+        <h4>Releases</h4>
+        <p>124</p>
+        <canvas id="chart3"></canvas>
+      </div>
+      <div class="stat-card">
+        <h4>Fanlink Clicks</h4>
+        <p>7,890</p>
+        <canvas id="chart4"></canvas>
+      </div>
+    </div>
+  </div>
 
-    // Load initial UI: populate plan from localStorage if present
-    function populatePlanFromStorage() {
-      const plan = localStorage.getItem('selectedPlan');
-      if (plan) {
-        try {
-          const p = JSON.parse(plan);
-          $("planName").textContent = p.title || "Plan";
-          $("planMeta").textContent = `Expires: ${p.expires || '—'}`;
-          $("planDetails").textContent = p.desc || "Plan loaded from localStorage";
-        } catch(e){
-          $("planName").textContent = plan;
-          $("planMeta").textContent = "No expiry data";
-        }
+  <!-- ✅ Scripts -->
+  <script>
+    lucide.createIcons();
+
+    const artist = localStorage.getItem("artistName");
+    const plan = localStorage.getItem("selectedPlan");
+    if (artist && plan) {
+      document.getElementById("artistName").innerText = artist;
+      document.getElementById("planName").innerText = plan;
+    }
+
+    function toggleSidebar() {
+      const sidebar = document.getElementById("sidebar");
+      const overlay = document.getElementById("overlay");
+      sidebar.classList.toggle("active");
+      overlay.classList.toggle("active");
+    }
+
+    function toggleDropdown() {
+      const dropdown1 = document.getElementById("dropdownMenu");
+      const dropdown2 = document.getElementById("dropdownMenuDesktop");
+      if (window.innerWidth <= 768) {
+        dropdown1.style.display = dropdown1.style.display === "flex" ? "none" : "flex";
       } else {
-        $("planName").textContent = "No Plan Selected";
-        $("planMeta").textContent = "Free / Trial";
+        dropdown2.style.display = dropdown2.style.display === "flex" ? "none" : "flex";
       }
     }
-    populatePlanFromStorage();
 
-    // Dummy API: replace with real fetch('/api/userdata?email=...') when backend ready
-    function fetchUserDataDummy(email){
-      // simulate an async API that returns stats + plan
-      return new Promise(resolve => {
-        setTimeout(()=> {
-          resolve({
-            releases: 5,
-            streams: 12450,
-            earnings: 1250,
-            plan: { title: "Professional Plan", expires: "2026-01-01", desc: "Pro features: Unlimited releases, priority support." },
-            activity: [
-              "Release 'Sunset Vibe' approved",
-              "Payout requested: ₹500",
-              "Analytics report ready"
-            ]
-          });
-        }, 600); // small delay to mimic network
-      });
+    function logout() {
+      localStorage.clear();
+      window.location.href = "login.html";
     }
 
-    // Auth state listener: updates UI or redirects
-    onAuthStateChanged(auth, async (user) => {
-      if (!user) {
-        // Not logged in -> go to auth page
-        window.location.href = "auth.html";
-        return;
-      }
+    function toggleSubmenu(id) {
+      const submenu = document.getElementById(id);
+      const toggle = submenu.previousElementSibling;
+      toggle.classList.toggle("active");
+    }
 
-      // user is logged in
-      const displayName = user.displayName || user.email.split('@')[0];
-      const email = user.email || "—";
+    const dummyData = {
+      labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+      datasets: [{
+        label: "Dummy",
+        data: [12, 19, 10, 15, 22, 18],
+        borderColor: "#00ddff",
+        borderWidth: 2,
+        fill: false,
+        tension: 0.3,
+      }]
+    };
 
-      // Basic UI placements
-      $("sideName").textContent = displayName;
-      $("sideEmail").textContent = email;
-      $("topName").textContent = displayName;
-      $("topEmail").textContent = email;
-      $("welcomeText").textContent = `Welcome back, ${displayName}`;
-      $("welcomeEmail").textContent = email;
-      $("mainAvatar").textContent = displayName.charAt(0).toUpperCase();
-      $("sideAvatar").textContent = displayName.charAt(0).toUpperCase();
+    const chartOptions = {
+      animation: {
+        duration: 1500,
+        easing: 'easeInOutQuad'
+      },
+      plugins: { legend: { display: false } },
+      scales: { x: { display: false }, y: { display: false } }
+    };
 
-      // Fetch user-specific data (dummy here)
-      try {
-        // If you have a real API:
-        // const res = await fetch(`/api/userdata?email=${encodeURIComponent(email)}`);
-        // const data = await res.json();
-
-        // For demo use dummy:
-        const data = await fetchUserDataDummy(email);
-
-        // populate stats
-        $("statReleases").textContent = data.releases ?? 0;
-        $("statStreams").textContent = data.streams?.toLocaleString('en-IN') ?? 0;
-        $("statEarnings").textContent = data.earnings ? `₹${data.earnings}` : "₹0";
-
-        // plan
-        if (data.plan) {
-          $("planName").textContent = data.plan.title;
-          $("planMeta").textContent = `Expires: ${data.plan.expires}`;
-          $("planDetails").textContent = data.plan.desc;
-          // also save to localStorage so sidebar persists
-          try { localStorage.setItem('selectedPlan', JSON.stringify(data.plan)); } catch(e){}
-        }
-
-        // activity
-        const act = data.activity || [];
-        $("activityList").innerHTML = act.map(a => `<div style="padding:8px 0;border-bottom:1px dashed rgba(255,255,255,0.02)">${a}</div>`).join('') || "No recent activity";
-
-      } catch(err){
-        console.error("Failed to load user data:", err);
-      }
-    });
-
-    // UI interactions (demo)
-    $("upgradeBtn").addEventListener("click", ()=> alert("Compare / Upgrade clicked — link to pricing page here."));
-    $("manageBilling").addEventListener("click", ()=> alert("Open billing management — integrate real billing portal."));
-    $("downloadReport").addEventListener("click", ()=> alert("Generating report (dummy)..."));
-    $("openSupport").addEventListener("click", ()=> alert("Open support center (dummy)."));
-
-    // Optional: keyboard quick search
-    $("searchInput").addEventListener("keydown", (e)=> {
-      if (e.key === "Enter") alert("Search for: " + e.target.value);
-    });
+    new Chart(document.getElementById("chart1"), { type: "line", data: dummyData, options: chartOptions });
+    new Chart(document.getElementById("chart2"), { type: "line", data: dummyData, options: chartOptions });
+    new Chart(document.getElementById("chart3"), { type: "line", data: dummyData, options: chartOptions });
+    new Chart(document.getElementById("chart4"), { type: "line", data: dummyData, options: chartOptions });
   </script>
 </body>
 </html>
