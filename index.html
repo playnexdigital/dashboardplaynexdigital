@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Sulexa / Playnex Dashboard</title>
+  <style>
+    :root{
+      --bg:#0b0b0b;
+      --panel:#111;
+      --muted:#bfc6c8;
+      --accent:#00ddff;
+      --accent-dark:#00b8d4;
+      --card-shadow: 0 6px 24px rgba(0,221,255,0.06);
+      --radius:12px;
+      --maxw:1100px;
+    }
+    html,body{height:100%;margin:0;font-family:Inter,Roboto,system-ui,-apple-system,Segoe UI,Arial;}
+    body{background:linear-gradient(180deg,#050505 0%, #0b0b0b 100%);color:#e6eef0;display:flex;align-items:flex-start;justify-content:center;padding:28px;}
+    .wrap{width:100%;max-width:var(--maxw);display:grid;grid-template-columns:260px 1fr;gap:20px;}
+    /* SIDEBAR */
+    .sidebar{background:var(--panel);border-radius:16px;padding:18px;box-shadow:var(--card-shadow);height:calc(100vh - 56px);position:sticky;top:28px;overflow:hidden;display:flex;flex-direction:column;}
+    .brand{display:flex;align-items:center;gap:12px;margin-bottom:18px;}
+    .logo{width:44px;height:44px;border-radius:10px;background:linear-gradient(90deg,var(--accent) 0%, #4fc3f7 100%);display:flex;align-items:center;justify-content:center;font-weight:700;color:#001;}
+    .brand h3{margin:0;font-size:16px;color:#fff}
+    .profile{display:flex;align-items:center;gap:12px;padding:10px;border-radius:10px;background:rgba(255,255,255,0.02);margin-bottom:14px}
+    .avatar{width:52px;height:52px;border-radius:10px;background:linear-gradient(120deg,#222,#111);display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--accent)}
+    .profile .meta{font-size:13px}
+    .profile .meta .name{color:#fff;font-weight:600}
+    .plan-box{margin-top:10px;padding:10px;border-radius:10px;background:rgba(255,255,255,0.03);box-shadow: 0 4px 12px rgba(0,0,0,0.6);border:1px solid rgba(0,221,255,0.06)}
+    .plan-box small{display:block;color:var(--muted);font-size:12px}
+    .menu{margin-top:14px;overflow:auto;padding-right:6px}
+    .menu a{display:flex;align-items:center;gap:10px;padding:10px;border-radius:8px;color:rgba(255,255,255,0.85);text-decoration:none;margin-bottom:6px}
+    .menu a:hover{background:linear-gradient(90deg, rgba(0,221,255,0.06), rgba(0,0,0,0.04));color:#fff}
+    .menu .dot{width:8px;height:8px;border-radius:50%;background:#9aa;opacity:0.9;margin-right:6px}
+    .support{margin-top:auto;padding-top:10px;border-top:1px dashed rgba(255,255,255,0.03)}
+    .support a{color:#fff;text-decoration:none;font-weight:600}
+    /* MAIN */
+    .main{min-height:80vh;background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);border-radius:16px;padding:18px;box-shadow:var(--card-shadow);overflow:hidden}
+    .topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px}
+    .search{flex:1;display:flex;align-items:center;gap:8px;background:rgba(255,255,255,0.02);padding:8px 12px;border-radius:10px}
+    .search input{flex:1;background:transparent;border:none;outline:none;color:#cfe;}
+    .user-actions{display:flex;gap:10px;align-items:center}
+    .btn{background:var(--accent);color:#002;padding:8px 12px;border-radius:8px;border:none;cursor:pointer;font-weight:700}
+    .btn.ghost{background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--muted)}
+    /* Dashboard content */
+    .grid{display:grid;grid-template-columns:1fr 320px;gap:18px}
+    .card{background:rgba(255,255,255,0.02);padding:18px;border-radius:12px}
+    .welcome{display:flex;align-items:center;justify-content:space-between;gap:12px}
+    .user-card{display:flex;align-items:center;gap:14px}
+    .user-card .avatar-lg{width:64px;height:64px;border-radius:12px;background:linear-gradient(120deg,#0b0b0b,#111);display:flex;align-items:center;justify-content:center;font-weight:800;color:var(--accent);font-size:20px}
+    .stats{display:flex;gap:12px;margin-top:14px}
+    .stat{flex:1;padding:12px;border-radius:10px;background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));text-align:center}
+    .stat h4{margin:0;color:var(--accent);font-size:18px}
+    .stat p{margin:6px 0 0;color:var(--muted);font-size:13px}
+    /* Responsive */
+    @media (max-width:900px){
+      .wrap{grid-template-columns:1fr; padding:12px;}
+      .sidebar{position:relative;height:auto;order:2}
+      .main{order:1}
+      .grid{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+
+  <div class="wrap">
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="logo">SM</div>
+        <div>
+          <h3>Sulexa / Playnex</h3>
+          <small style="color:var(--muted)">Dashboard</small>
+        </div>
+      </div>
+
+      <div class="profile">
+        <div class="avatar" id="sideAvatar">S</div>
+        <div class="meta">
+          <div class="name" id="sideName">Loading...</div>
+          <div style="font-size:12px;color:var(--muted)" id="sideEmail">...</div>
+        </div>
+      </div>
+
+      <div class="plan-box" id="planBox">
+        <small>Plan</small>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-top:6px">
+          <strong id="planName">No Plan Selected</strong>
+          <button class="btn ghost" id="upgradeBtn">Compare / Upgrade</button>
+        </div>
+        <div style="margin-top:8px;color:var(--muted);font-size:13px" id="planMeta">No active subscription</div>
+      </div>
+
+      <nav class="menu" id="menuList">
+        <a href="#" class="menu-item"><span class="dot"></span>Dashboard</a>
+        <a href="#" class="menu-item"><span class="dot"></span>Releases</a>
+        <a href="#" class="menu-item"><span class="dot"></span>Analytics</a>
+        <a href="#" class="menu-item"><span class="dot"></span>Playlists</a>
+        <a href="#" class="menu-item"><span class="dot"></span>Support Center</a>
+      </nav>
+
+      <div class="support">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <a href="#" id="supportLink">Support Center</a>
+          <button class="btn" id="logoutBtnSidebar">Logout</button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="main">
+      <div class="topbar">
+        <div class="search">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M21 21l-4.35-4.35" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+          <input placeholder="Search releases, artists, invoices..." id="searchInput" />
+        </div>
+
+        <div class="user-actions">
+          <div style="text-align:right;">
+            <div style="font-weight:700" id="topName">—</div>
+            <div style="font-size:12px;color:var(--muted)" id="topEmail">—</div>
+          </div>
+          <button class="btn" id="logoutBtn">Logout</button>
+        </div>
+      </div>
+
+      <section class="grid">
+        <div>
+          <div class="card welcome">
+            <div class="user-card">
+              <div class="avatar-lg" id="mainAvatar">S</div>
+              <div>
+                <h2 id="welcomeText">Welcome, Loading...</h2>
+                <p style="color:var(--muted);margin-top:8px" id="welcomeEmail">Email loading...</p>
+              </div>
+            </div>
+
+            <div style="text-align:right">
+              <small style="color:var(--muted)">Member since</small>
+              <div style="font-weight:700">Jan 1, 2025</div>
+            </div>
+          </div>
+
+          <div class="card" style="margin-top:14px">
+            <h3 style="margin:0 0 12px 0">Your quick stats</h3>
+            <div class="stats">
+              <div class="stat"><h4 id="statReleases">0</h4><p>Releases</p></div>
+              <div class="stat"><h4 id="statStreams">0</h4><p>Streams (est.)</p></div>
+              <div class="stat"><h4 id="statEarnings">₹0</h4><p>Pending Payout</p></div>
+            </div>
+          </div>
+
+          <div class="card" style="margin-top:14px">
+            <h3 style="margin:0 0 12px 0">Recent activity</h3>
+            <div id="activityList" style="color:var(--muted);font-size:14px">No activity (dummy demo)</div>
+          </div>
+        </div>
+
+        <!-- RIGHT COLUMN -->
+        <aside>
+          <div class="card">
+            <h4 style="margin-top:0">Plan details</h4>
+            <div style="margin-top:8px;color:var(--muted)" id="planDetails">
+              Link a real billing API later. For demo, this shows localStorage or dummy API result.
+            </div>
+            <div style="margin-top:12px;display:flex;gap:8px">
+              <button class="btn" id="manageBilling">Manage</button>
+              <button class="btn ghost" id="downloadReport">Download Report</button>
+            </div>
+          </div>
+
+          <div class="card" style="margin-top:14px">
+            <h4 style="margin-top:0">Support</h4>
+            <p style="color:var(--muted)">Questions? Contact support or check docs.</p>
+            <button class="btn ghost" id="openSupport">Open Support</button>
+          </div>
+        </aside>
+
+      </section>
+    </main>
+  </div>
+
+  <!-- Firebase SDK (modular) -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+    // ----- Replace below with your real Firebase config -----
+    const firebaseConfig = {
+      apiKey: "DUMMY_API_KEY",
+      authDomain: "dummy-project.firebaseapp.com",
+      projectId: "dummy-project",
+      storageBucket: "dummy-project.appspot.com",
+      messagingSenderId: "123456789",
+      appId: "1:123456789:web:abcdef123456"
+    };
+    // -------------------------------------------------------
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    // Helper: set UI text safely
+    const $ = (id) => document.getElementById(id);
+
+    // Sign-out handlers
+    const doSignOut = () => {
+      signOut(auth).then(()=> {
+        // optional: clear any localStorage plan info on logout
+        // localStorage.removeItem('selectedPlan');
+        window.location.href = "auth.html"; // redirect back to login
+      }).catch(err => {
+        console.error("Signout error:", err);
+        alert("Logout failed, check console.");
+      });
+    };
+    $("logoutBtn").addEventListener("click", doSignOut);
+    $("logoutBtnSidebar").addEventListener("click", doSignOut);
+
+    // Load initial UI: populate plan from localStorage if present
+    function populatePlanFromStorage() {
+      const plan = localStorage.getItem('selectedPlan');
+      if (plan) {
+        try {
+          const p = JSON.parse(plan);
+          $("planName").textContent = p.title || "Plan";
+          $("planMeta").textContent = `Expires: ${p.expires || '—'}`;
+          $("planDetails").textContent = p.desc || "Plan loaded from localStorage";
+        } catch(e){
+          $("planName").textContent = plan;
+          $("planMeta").textContent = "No expiry data";
+        }
+      } else {
+        $("planName").textContent = "No Plan Selected";
+        $("planMeta").textContent = "Free / Trial";
+      }
+    }
+    populatePlanFromStorage();
+
+    // Dummy API: replace with real fetch('/api/userdata?email=...') when backend ready
+    function fetchUserDataDummy(email){
+      // simulate an async API that returns stats + plan
+      return new Promise(resolve => {
+        setTimeout(()=> {
+          resolve({
+            releases: 5,
+            streams: 12450,
+            earnings: 1250,
+            plan: { title: "Professional Plan", expires: "2026-01-01", desc: "Pro features: Unlimited releases, priority support." },
+            activity: [
+              "Release 'Sunset Vibe' approved",
+              "Payout requested: ₹500",
+              "Analytics report ready"
+            ]
+          });
+        }, 600); // small delay to mimic network
+      });
+    }
+
+    // Auth state listener: updates UI or redirects
+    onAuthStateChanged(auth, async (user) => {
+      if (!user) {
+        // Not logged in -> go to auth page
+        window.location.href = "auth.html";
+        return;
+      }
+
+      // user is logged in
+      const displayName = user.displayName || user.email.split('@')[0];
+      const email = user.email || "—";
+
+      // Basic UI placements
+      $("sideName").textContent = displayName;
+      $("sideEmail").textContent = email;
+      $("topName").textContent = displayName;
+      $("topEmail").textContent = email;
+      $("welcomeText").textContent = `Welcome back, ${displayName}`;
+      $("welcomeEmail").textContent = email;
+      $("mainAvatar").textContent = displayName.charAt(0).toUpperCase();
+      $("sideAvatar").textContent = displayName.charAt(0).toUpperCase();
+
+      // Fetch user-specific data (dummy here)
+      try {
+        // If you have a real API:
+        // const res = await fetch(`/api/userdata?email=${encodeURIComponent(email)}`);
+        // const data = await res.json();
+
+        // For demo use dummy:
+        const data = await fetchUserDataDummy(email);
+
+        // populate stats
+        $("statReleases").textContent = data.releases ?? 0;
+        $("statStreams").textContent = data.streams?.toLocaleString('en-IN') ?? 0;
+        $("statEarnings").textContent = data.earnings ? `₹${data.earnings}` : "₹0";
+
+        // plan
+        if (data.plan) {
+          $("planName").textContent = data.plan.title;
+          $("planMeta").textContent = `Expires: ${data.plan.expires}`;
+          $("planDetails").textContent = data.plan.desc;
+          // also save to localStorage so sidebar persists
+          try { localStorage.setItem('selectedPlan', JSON.stringify(data.plan)); } catch(e){}
+        }
+
+        // activity
+        const act = data.activity || [];
+        $("activityList").innerHTML = act.map(a => `<div style="padding:8px 0;border-bottom:1px dashed rgba(255,255,255,0.02)">${a}</div>`).join('') || "No recent activity";
+
+      } catch(err){
+        console.error("Failed to load user data:", err);
+      }
+    });
+
+    // UI interactions (demo)
+    $("upgradeBtn").addEventListener("click", ()=> alert("Compare / Upgrade clicked — link to pricing page here."));
+    $("manageBilling").addEventListener("click", ()=> alert("Open billing management — integrate real billing portal."));
+    $("downloadReport").addEventListener("click", ()=> alert("Generating report (dummy)..."));
+    $("openSupport").addEventListener("click", ()=> alert("Open support center (dummy)."));
+
+    // Optional: keyboard quick search
+    $("searchInput").addEventListener("keydown", (e)=> {
+      if (e.key === "Enter") alert("Search for: " + e.target.value);
+    });
+  </script>
+</body>
+</html>
