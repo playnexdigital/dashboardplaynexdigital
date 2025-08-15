@@ -1,129 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Sign Up | Playnex Digital</title>
-  <link rel="icon" href="images/favicon.png" type="image/favicon.png" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
-  <link href="https://fonts.googleapis.com/css2?family=Poppins&family=Oswald&display=swap" rel="stylesheet" />
-  <style>
-    html, body {
-      margin: 0; padding: 0; height: 100%;
-      font-family: 'Poppins', sans-serif;
-      background-color: #000; color: white;
-      overflow: hidden;
-    }
-    * { box-sizing: border-box; }
-    .main-container { display: flex; width: 100%; height: 100vh; }
-    .form-section {
-      flex: 1;
-      background-color: #111;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      overflow-y: auto;
-      justify-content: flex-start;
-      padding-top: 80px;
-    }
-    .form-content {
-      width: 100%; max-width: 560px;
-      padding: 10px 30px 60px 30px;
-    }
-
-    .logo {
-  text-align: center;
-  margin-bottom: 5px;
+<meta charset="UTF-8" />
+<title>Signup | Playnex Digital</title>
+<link rel="icon" href="images/favicon.png" type="image/png" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+<link href="https://fonts.googleapis.com/css2?family=Poppins&family=Oswald&display=swap" rel="stylesheet" />
+<style>
+html, body {
+  margin: 0; padding: 0; height: 100%;
+  font-family: 'Poppins', sans-serif;
+  background-color: #000; color: white;
+  overflow: hidden;
 }
-
-.logo img {
-  height: 30px;
-  max-width: 100%;
+* { box-sizing: border-box; }
+.main-container { display: flex; width: 100%; height: 100vh; }
+.form-section {
+  flex: 1;
+  background-color: #111;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-y: auto;
+  justify-content: flex-start;
+  padding-top: 60px;
 }
+.form-content {
+  width: 100%; max-width: 560px;
+  padding: 10px 30px 60px 30px;
+}
+.logo { text-align: center; margin-bottom: 25px; }
+.logo img { height: 30px; max-width: 100%; }
+h1 { font-family: 'Oswald', sans-serif; font-weight: 600; color: #fff; text-align: center; margin-top: 10px; margin-bottom: 10px; font-size: 32px; }
+p.signup-desc { text-align: center; color: rgba(255,255,255,0.7); margin-bottom: 30px; font-size: 14px; }
 
-    h1 {
-      font-family: 'Oswald', sans-serif;
-      font-weight: 600;
-      color: #fff;
-      text-align: center;
-      margin-top: 35px;
-      margin-bottom: 30px;
-      font-size: 32px;
-    }
-    form { width: 100%; }
-    label {
-      display: block;
-      margin-top: 15px;
-      font-weight: 500;
-    }
-    label span.required {
-      color: #ff4444;
-      margin-left: 5px;
-    }
-    .input-wrapper {
-      position: relative;
-    }
-    input, select {
-      width: 100%; padding: 12px; margin-top: 5px;
-      border-radius: 6px; border: 1px solid #444;
-      background-color: #222; color: white; font-size: 14px;
-    }
-    input::placeholder {
-      color: rgba(255, 255, 255, 0.5);
-    }
-    input.invalid, select.invalid { border-color: #ff4444; }
-    input.valid, select.valid { border-color: white; }
+button.auth-btn {
+  width: 100%;
+  font-weight: bold;
+  padding: 14px;
+  border-radius: 6px;
+  border: 1px solid rgba(255,255,255,0.3);
+  background-color: #222;
+  color: rgba(255,255,255,0.85);
+  font-size: 15px;
+  cursor: pointer;
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: 0.3s ease;
+}
+button.auth-btn:hover { background-color: #333; }
 
-    .toggle-password {
-      position: absolute;
-      top: 52%;
-      right: 10px;
-      transform: translateY(-50%);
-      cursor: pointer;
-      background: none;
-      border: none;
-      padding: 0;
-      height: 24px;
-      width: 36px;
-    }
-    .toggle-password svg {
-      width: 28px;
-      height: 24px;
-      stroke: rgba(255, 255, 255, 0.7);
-      stroke-width: 2.2;
-      fill: none;
-      transition: stroke 0.3s ease;
-    }
-    .toggle-password:hover svg {
-      stroke: #fff;
-    }
-    .toggle-password.active svg {
-      stroke: #fff;
-    }
-    .slash {
-      display: none;
-      stroke: rgba(255, 255, 255, 0.7);
-      stroke-width: 2.2;
-    }
-    .toggle-password.active .slash {
-      display: block;
-    }
+button.primary-btn {
+  background-color: #00ddff;
+  color: #000;
+  font-weight: bold;
+  padding: 14px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-size: 15px;
+  margin-top: 15px;
+  transition: 0.3s ease;
+  width: 100%;
+}
+button.primary-btn:hover { background-color: #00c0e6; }
 
-    .error-note {
-      font-size: 13px;
-      color: rgba(255, 68, 68, 0.9);
-      margin-top: 5px;
-      display: none;
-    }
-
-    .signup-btn, .next-btn {
-      background-color: #00ddff; color: #000;
-      font-weight: bold; padding: 12px 25px;
-      border: none; border-radius: 6px;
-      cursor: pointer; display: block;
-      margin: 20px auto 0 auto; font-size: 15px;
-    }
-
-    .back-btn {
+.back-btn {
       background: transparent;
       color: white;
       font-size: 15px;
@@ -140,249 +85,241 @@
       background-color: rgba(255, 255, 255, 0.1);
     }
 
-    .login-link {
-      text-align: center; margin-top: 25px;
-      font-size: 14px;
-    }
-    .login-link a {
-      color: #00ddff; text-decoration: none; margin-left: 5px;
-    }
+label { display: block; margin-top: 15px; font-weight: 500; }
+label span.required { color: #ff4444; margin-left: 5px; }
+.input-wrapper { position: relative; }
+input, select {
+  width: 100%; padding: 14px; margin-top: 5px;
+  border-radius: 6px; border: 1px solid #444;
+  background-color: #222; color: white; font-size: 14px;
+}
+input::placeholder { color: rgba(255, 255, 255, 0.5); }
+input.invalid, select.invalid { border-color: #ff4444; }
+input.valid, select.valid { border-color: white; }
 
-    .step { display: none; }
-    .step.active { display: block; }
+.toggle-password {
+  position: absolute; top: 50%; right: 10px;
+  transform: translateY(-50%);
+  cursor: pointer;
+  background: none; border: none; padding: 0;
+  height: 24px; width: 36px;
+}
+.toggle-password svg { width: 28px; height: 24px; stroke: rgba(255, 255, 255, 0.7); stroke-width: 2.2; fill: none; }
+.toggle-password:hover svg { stroke: #fff; }
+.toggle-password.active .slash { display: block; }
+.slash { display: none; stroke: rgba(255,255,255,0.7); stroke-width: 2.2; }
 
-    .checkbox-wrapper {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-top: 10px;
-      gap: 6px;
-    }
+.error-note { font-size: 13px; color: rgba(255, 68, 68, 0.9); margin-top: 5px; display: none; }
+.login-link { text-align: center; margin-top: 25px; font-size: 14px; }
+.login-link a { color: #00ddff; text-decoration: none; transition: 0.3s ease; }
+.login-link a:hover { text-decoration: underline; }
+.terms-text { font-size: 14px; color: rgba(255,255,255,0.75); text-align: center; margin-top: 40px; line-height: 1.6; }
+.terms-text a { color: #4fc3f7; text-decoration: none; }
+.terms-text a:hover { text-decoration: underline; }
 
-    .checkbox-wrapper input[type="checkbox"] {
-      margin: 0;
-      transform: scale(1.1);
-    }
+.step { display: none; }
+.step.active { display: block; animation: fadeIn 0.3s ease-in-out; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(-10px);} to { opacity: 1; transform: translateY(0);} }
 
-    .checkbox-wrapper label {
-      margin: 0;
-      font-size: 14px;
-      color: rgba(255,255,255,0.85);
-      white-space: nowrap;
-    }
-
-    .checkbox-wrapper label a {
-      color: rgba(255,255,255,0.85);
-      text-decoration: underline;
-    }
-
-    @media screen and (max-width: 768px) {
-      .main-container { flex-direction: column; }
-      .form-section { padding: 20px; height: 100vh; }
-      .image-section { display: none; }
-    }
-
-    .image-section {
-      flex: 1; background-color: #000;
-    }
-
-    .image-section img {
-      width: 100%; height: 100%;
-      object-fit: cover; object-position: top center;
-    }
-  </style>
+@media screen and (max-width: 768px) { 
+  .main-container { flex-direction: column; } 
+  .form-section { padding: 20px; height: 100vh; } 
+  .image-section { display: none; } 
+}
+.image-section { flex: 1; background-color: #000; }
+.image-section img { width: 100%; height: 100%; object-fit: cover; object-position: top center; }
+</style>
 </head>
 <body>
-  <div class="main-container">
-    <div class="form-section">
-      <div class="form-content">
-        <div class="logo">
-      <a href="/"><img src="images/logo.png" alt="Playnex Digital Logo" /></a>
-    </div>
-        <h1>Create an account</h1>
-        <form id="signupForm" novalidate>
-          <!-- Step 1 -->
-          <div id="step1" class="step active">
-            <label for="fullName">Full Name<span class="required">*</span></label>
-            <input type="text" id="fullName" placeholder="Enter your name" required />
-            <label for="email">Email Address<span class="required">*</span></label>
-            <input type="email" id="email" placeholder="Enter your email" required />
+<div class="main-container">
+  <div class="form-section">
+    <div class="form-content">
+      <div class="logo">
+        <a href="/"><img src="images/logo.png" alt="Playnex Digital Logo" /></a>
+      </div>
+      <h1>Create an account</h1>
+      <p class="signup-desc">Join the community and start your musical journey</p>
 
-            <label for="password">Password<span class="required">*</span></label>
-            <div class="input-wrapper">
-              <input type="password" id="password" placeholder="Create a strong password" required />
-              <button type="button" class="toggle-password" onclick="togglePassword('password', this)">
-                <svg viewBox="0 0 24 24">
-                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
-                  <path d="M12 8a4 4 0 1 1 0 8 4 4 0 0 1 0-8z"/>
-                  <line class="slash" x1="4" y1="2" x2="20" y2="22" />
-                </svg>
-              </button>
-            </div>
-            <div class="error-note" id="passwordNote">
-              Password must be 6+ characters with 1 uppercase, 1 number, and 1 special character.
-            </div>
+      <!-- Auth Buttons -->
+      <button type="button" id="emailStartBtn" class="auth-btn">
+        <img src="https://www.svgrepo.com/show/424662/email-newsletter-subscription.svg" alt="Email Icon" width="18" /> Continue with Email
+      </button>
+      <button type="button" id="googleSignupBtn" class="auth-btn">
+        <img src="https://www.svgrepo.com/show/355037/google.svg" alt="Google Icon" width="18" /> Continue with Google
+      </button>
 
-            <label for="confirmPassword">Confirm Password<span class="required">*</span></label>
-            <div class="input-wrapper">
-              <input type="password" id="confirmPassword" placeholder="Confirm password" required />
-              <button type="button" class="toggle-password" onclick="togglePassword('confirmPassword', this)">
-                <svg viewBox="0 0 24 24">
-                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
-                  <path d="M12 8a4 4 0 1 1 0 8 4 4 0 0 1 0-8z"/>
-                  <line class="slash" x1="4" y1="2" x2="20" y2="22" />
-                </svg>
-              </button>
-            </div>
-            <div class="error-note" id="matchNote">Password does not match.</div>
+      <!-- Step 1 -->
+      <div id="step1" class="step">
+        <label for="fullName">Full Name<span class="required">*</span></label>
+        <input type="text" id="fullName" placeholder="Enter your name" required />
 
-            <button type="button" class="next-btn" onclick="nextStep()">Next</button>
-          </div>
-          <!-- Step 2 -->
-          <div id="step2" class="step">
-            <button type="button" class="back-btn" onclick="prevStep()">← Back</button>
+        <label for="email">Email Address<span class="required">*</span></label>
+        <input type="email" id="email" placeholder="Enter your email" required />
 
-            <label for="phone">Phone Number<span class="required">*</span></label>
-            <input type="tel" id="phone" placeholder="Enter your phone number" required />
-
-            <label for="country">Country<span class="required">*</span></label>
-            <select id="country" required>
-              <option value="India" selected>India</option>
-            </select>
-
-            <label for="state">State<span class="required">*</span></label>
-            <select id="state" required>
-              <option value="">Select State</option>
-            </select>
-
-            <label for="district">District<span class="required">*</span></label>
-            <select id="district" required>
-              <option value="">Select District</option>
-            </select>
-
-            <div class="checkbox-wrapper">
-              <input type="checkbox" id="terms" />
-              <label for="terms">I agree to the <a href="#" target="_blank">Terms and Conditions</a></label>
-            </div>
-
-            <button type="submit" class="signup-btn">Sign Up</button>
-          </div>
-        </form>
-        <div class="login-link">
-          Already have an account? <a href="https://dashboard.spmusiczone.com/login" target="_blank">Login</a>
+        <label for="password">Password<span class="required">*</span></label>
+        <div class="input-wrapper">
+          <input type="password" id="password" placeholder="Create a strong password" required />
+          <button type="button" class="toggle-password" onclick="togglePassword('password', this)">
+            <svg viewBox="0 0 24 24">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+              <path d="M12 8a4 4 0 1 1 0 8 4 4 0 0 1 0-8z"/>
+              <line class="slash" x1="4" y1="2" x2="20" y2="22" />
+            </svg>
+          </button>
         </div>
+        <div class="error-note" id="passwordNote">
+          Password must be 6+ characters with 1 uppercase, 1 number, and 1 special character.
+        </div>
+
+        <label for="confirmPassword">Confirm Password<span class="required">*</span></label>
+        <div class="input-wrapper">
+          <input type="password" id="confirmPassword" placeholder="Confirm password" required />
+          <button type="button" class="toggle-password" onclick="togglePassword('confirmPassword', this)">
+            <svg viewBox="0 0 24 24">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+              <path d="M12 8a4 4 0 1 1 0 8 4 4 0 0 1 0-8z"/>
+              <line class="slash" x1="4" y1="2" x2="20" y2="22" />
+            </svg>
+          </button>
+        </div>
+        <div class="error-note" id="matchNote">Password does not match.</div>
+
+        <button type="button" class="primary-btn" onclick="nextStep()">Next</button>
+      </div>
+
+      <!-- Step 2 -->
+      <div id="step2" class="step">
+<button type="button" class="back-btn" onclick="prevStep()"> Back</button>
+        <label for="phone">Phone Number<span class="required">*</span></label>
+        <input type="tel" id="phone" placeholder="Enter your phone number" required />
+
+        <label for="country">Country<span class="required">*</span></label>
+        <select id="country" required>
+          <option value="India" selected>India</option>
+        </select>
+
+        <label for="state">State<span class="required">*</span></label>
+        <select id="state" required>
+          <option value="">Select State</option>
+        </select>
+
+        <label for="district">District<span class="required">*</span></label>
+        <select id="district" required>
+          <option value="">Select District</option>
+        </select>
+
+        <button type="submit" class="primary-btn">Sign Up</button>
+      </div>
+
+      <div class="login-link">
+        Already have an account? <a href="https://dashboard.spmusiczone.com/login">Login</a>
+      </div>
+
+      <div class="terms-text">
+        By signing up, you agree to our <a href="https://spmusiczone.com/terms-and-conditions" target="_blank">Terms & Conditions</a> and <a href="https://spmusiczone.com/privacy-policy" target="_blank">Privacy Policy</a>.
       </div>
     </div>
-    <div class="image-section">
-  <img src="images/form-image.png" alt="Form Image" />
-</div>
   </div>
 
-  <script>
-    const statesData = {
-  "Andhra Pradesh": ["Anantapur", "Chittoor", "East Godavari", "Guntur", "Krishna", "Kurnool", "Nellore", "Prakasam", "Srikakulam", "Visakhapatnam", "Vizianagaram", "West Godavari", "YSR Kadapa"],
-  "Arunachal Pradesh": ["Tawang", "West Kameng", "East Kameng", "Papum Pare", "Kurung Kumey", "Kra Daadi", "Lower Subansiri", "Upper Subansiri", "West Siang", "East Siang", "Siang", "Upper Siang", "Lower Siang", "Lower Dibang Valley", "Dibang Valley", "Lohit", "Namsai", "Changlang", "Tirap", "Longding"],
-  "Assam": ["Baksa", "Barpeta", "Biswanath", "Bongaigaon", "Cachar", "Charaideo", "Chirang", "Darrang", "Dhemaji", "Dhubri", "Dibrugarh", "Dima Hasao", "Goalpara", "Golaghat", "Hailakandi", "Hojai", "Jorhat", "Kamrup", "Kamrup Metropolitan", "Karbi Anglong", "Karimganj", "Kokrajhar", "Lakhimpur", "Majuli", "Morigaon", "Nagaon", "Nalbari", "Sivasagar", "Sonitpur", "South Salmara-Mankachar", "Tinsukia", "Udalguri", "West Karbi Anglong"],
-  "Bihar": ["Araria", "Arwal", "Aurangabad", "Banka", "Begusarai", "Bhagalpur", "Bhojpur", "Buxar", "Darbhanga", "East Champaran", "Gaya", "Gopalganj", "Jamui", "Jehanabad", "Kaimur", "Katihar", "Khagaria", "Kishanganj", "Lakhisarai", "Madhepura", "Madhubani", "Munger", "Muzaffarpur", "Nalanda", "Nawada", "Patna", "Purnia", "Rohtas", "Saharsa", "Samastipur", "Saran", "Sheikhpura", "Sheohar", "Sitamarhi", "Siwan", "Supaul", "Vaishali", "West Champaran"],
-  "Chhattisgarh": ["Balod", "Baloda Bazar", "Balrampur", "Bastar", "Bemetara", "Bijapur", "Bilaspur", "Dantewada", "Dhamtari", "Durg", "Gariaband", "Gaurela-Pendra-Marwahi", "Janjgir-Champa", "Jashpur", "Kabirdham", "Kanker", "Kondagaon", "Korba", "Koriya", "Mahasamund", "Mungeli", "Narayanpur", "Raigarh", "Raipur", "Rajnandgaon", "Sukma", "Surajpur", "Surguja"],
-  "Goa": ["North Goa", "South Goa"],
-  "Gujarat": ["Ahmedabad", "Amreli", "Anand", "Aravalli", "Banaskantha", "Bharuch", "Bhavnagar", "Botad", "Chhota Udaipur", "Dahod", "Dang", "Devbhumi Dwarka", "Gandhinagar", "Gir Somnath", "Jamnagar", "Junagadh", "Kheda", "Kutch", "Mahisagar", "Mehsana", "Morbi", "Narmada", "Navsari", "Panchmahal", "Patan", "Porbandar", "Rajkot", "Sabarkantha", "Surat", "Surendranagar", "Tapi", "Vadodara", "Valsad"],
-  "Haryana": ["Ambala", "Bhiwani", "Charkhi Dadri", "Faridabad", "Fatehabad", "Gurugram", "Hisar", "Jhajjar", "Jind", "Kaithal", "Karnal", "Kurukshetra", "Mahendragarh", "Nuh", "Palwal", "Panchkula", "Panipat", "Rewari", "Rohtak", "Sirsa", "Sonipat", "Yamunanagar"],
-  "Himachal Pradesh": ["Bilaspur", "Chamba", "Hamirpur", "Kangra", "Kinnaur", "Kullu", "Lahaul and Spiti", "Mandi", "Shimla", "Sirmaur", "Solan", "Una"],
-  "Jharkhand": ["Bokaro", "Chatra", "Deoghar", "Dhanbad", "Dumka", "East Singhbhum", "Garhwa", "Giridih", "Godda", "Gumla", "Hazaribagh", "Jamtara", "Khunti", "Koderma", "Latehar", "Lohardaga", "Pakur", "Palamu", "Ramgarh", "Ranchi", "Sahebganj", "Seraikela Kharsawan", "Simdega", "West Singhbhum"],
-  "Karnataka": ["Bagalkot", "Ballari", "Belagavi", "Bengaluru Rural", "Bengaluru Urban", "Bidar", "Chamarajanagar", "Chikkaballapur", "Chikkamagaluru", "Chitradurga", "Dakshina Kannada", "Davangere", "Dharwad", "Gadag", "Hassan", "Haveri", "Kalaburagi", "Kodagu", "Kolar", "Koppal", "Mandya", "Mysuru", "Raichur", "Ramanagara", "Shivamogga", "Tumakuru", "Udupi", "Uttara Kannada", "Vijayapura", "Yadgir"],  
-  "Kerala": ["Alappuzha", "Ernakulam", "Idukki", "Kannur", "Kasaragod", "Kollam", "Kottayam", "Kozhikode", "Malappuram", "Palakkad", "Pathanamthitta", "Thiruvananthapuram", "Thrissur", "Wayanad"],
-  "Madhya Pradesh": ["Agar Malwa", "Alirajpur", "Anuppur", "Ashoknagar", "Balaghat", "Barwani", "Betul", "Bhind", "Bhopal", "Burhanpur", "Chhatarpur", "Chhindwara", "Damoh", "Datia", "Dewas", "Dhar", "Dindori", "Guna", "Gwalior", "Harda", "Hoshangabad", "Indore", "Jabalpur", "Jhabua", "Katni", "Khandwa", "Khargone", "Mandla", "Mandsaur", "Morena", "Narsinghpur", "Neemuch", "Niwari", "Panna", "Raisen", "Rajgarh", "Ratlam", "Rewa", "Sagar", "Satna", "Sehore", "Seoni", "Shahdol", "Shajapur", "Sheopur", "Shivpuri", "Sidhi", "Singrauli", "Tikamgarh", "Ujjain", "Umaria", "Vidisha"],
-  "Maharashtra": ["Ahmednagar", "Akola", "Amravati", "Aurangabad", "Beed", "Bhandara", "Buldhana", "Chandrapur", "Dhule", "Gadchiroli", "Gondia", "Hingoli", "Jalgaon", "Jalna", "Kolhapur", "Latur", "Mumbai City", "Mumbai Suburban", "Nagpur", "Nanded", "Nandurbar", "Nashik", "Osmanabad", "Palghar", "Parbhani", "Pune", "Raigad", "Ratnagiri", "Sangli", "Satara", "Sindhudurg", "Solapur", "Thane", "Wardha", "Washim", "Yavatmal"],
-  "Manipur": ["Bishnupur", "Chandel", "Churachandpur", "Imphal East", "Imphal West", "Jiribam", "Kakching", "Kamjong", "Kangpokpi", "Noney", "Pherzawl", "Senapati", "Tamenglong", "Tengnoupal", "Thoubal", "Ukhrul"],
-  "Meghalaya": ["East Garo Hills", "East Jaintia Hills", "East Khasi Hills", "North Garo Hills", "Ri-Bhoi", "South Garo Hills", "South West Garo Hills", "South West Khasi Hills", "West Garo Hills", "West Jaintia Hills", "West Khasi Hills"],
-  "Mizoram": ["Aizawl", "Champhai", "Hnahthial", "Khawzawl", "Kolasib", "Lawngtlai", "Lunglei", "Mamit", "Saitual", "Serchhip"],
-  "Nagaland": ["Chümoukedima", "Dimapur", "Kiphire", "Kohima", "Longleng", "Mokokchung", "Mon", "Niuland", "Peren", "Phek", "Shamator", "Tseminyü", "Tuensang", "Wokha", "Zünheboto"],
-  "Odisha": ["Angul", "Balangir", "Balasore", "Bargarh", "Bhadrak", "Boudh", "Cuttack", "Deogarh", "Dhenkanal", "Gajapati", "Ganjam", "Jagatsinghpur", "Jajpur", "Jharsuguda", "Kalahandi", "Kandhamal", "Kendrapara", "Kendujhar", "Khordha", "Koraput", "Malkangiri", "Mayurbhanj", "Nabarangpur", "Nayagarh", "Nuapada", "Puri", "Rayagada", "Sambalpur", "Sonepur", "Sundargarh"],
-  "Punjab": ["Amritsar", "Barnala", "Bathinda", "Faridkot", "Fatehgarh Sahib", "Fazilka", "Ferozepur", "Gurdaspur", "Hoshiarpur", "Jalandhar", "Kapurthala", "Ludhiana", "Malerkotla", "Mansa", "Moga", "Muktsar", "Nawanshahr", "Pathankot", "Patiala", "Rupnagar", "Sangrur", "SAS Nagar", "Tarn Taran"],
-  "Rajasthan": ["Ajmer", "Alwar", "Banswara", "Baran", "Barmer", "Bharatpur", "Bhilwara", "Bikaner", "Bundi", "Chittorgarh", "Churu", "Dausa", "Dholpur", "Dungarpur", "Hanumangarh", "Jaipur", "Jaisalmer", "Jalore", "Jhalawar", "Jhunjhunu", "Jodhpur", "Karauli", "Kota", "Nagaur", "Pali", "Pratapgarh", "Rajsamand", "Sawai Madhopur", "Sikar", "Sirohi", "Sri Ganganagar", "Tonk", "Udaipur"],
-  "Sikkim": ["Gangtok", "Gyalshing", "Mangan", "Namchi", "Pakyong", "Soreng"],
-  "Tamil Nadu": ["Ariyalur", "Chengalpattu", "Chennai", "Coimbatore", "Cuddalore", "Dharmapuri", "Dindigul", "Erode", "Kallakurichi", "Kancheepuram", "Karur", "Krishnagiri", "Madurai", "Mayiladuthurai", "Nagapattinam", "Namakkal", "Nilgiris", "Perambalur", "Pudukkottai", "Ramanathapuram", "Ranipet", "Salem", "Sivaganga", "Tenkasi", "Thanjavur", "Theni", "Thoothukudi", "Tiruchirappalli", "Tirunelveli", "Tirupathur", "Tiruppur", "Tiruvallur", "Tiruvannamalai", "Tiruvarur", "Vellore", "Viluppuram", "Virudhunagar"],
-  "Telangana": ["Adilabad", "Bhadradri Kothagudem", "Hyderabad", "Jagtial", "Jangaon", "Jayashankar Bhupalpally", "Jogulamba Gadwal", "Kamareddy", "Karimnagar", "Khammam", "Komaram Bheem", "Mahabubabad", "Mahabubnagar", "Mancherial", "Medak", "Medchal–Malkajgiri", "Mulugu", "Nagarkurnool", "Nalgonda", "Narayanpet", "Nirmal", "Nizamabad", "Peddapalli", "Rajanna Sircilla", "Rangareddy", "Sangareddy", "Siddipet", "Suryapet", "Vikarabad", "Wanaparthy", "Warangal Rural", "Warangal Urban", "Yadadri Bhuvanagiri"],
-  "Tripura": ["Dhalai", "Gomati", "Khowai", "North Tripura", "Sepahijala", "South Tripura", "Unakoti", "West Tripura"],
-  "Uttar Pradesh": ["Agra", "Aligarh", "Ambedkar Nagar", "Amethi", "Amroha", "Auraiya", "Ayodhya", "Azamgarh", "Badaun", "Baghpat", "Bahraich", "Ballia", "Balrampur", "Banda", "Barabanki", "Bareilly", "Basti", "Bhadohi", "Bijnor", "Budaun", "Bulandshahr", "Chandauli", "Chitrakoot", "Deoria", "Etah", "Etawah", "Farrukhabad", "Fatehpur", "Firozabad", "Gautam Buddha Nagar", "Ghaziabad", "Ghazipur", "Gonda", "Gorakhpur", "Hamirpur", "Hapur", "Hardoi", "Hathras", "Jalaun", "Jaunpur", "Jhansi", "Kannauj", "Kanpur Dehat", "Kanpur Nagar", "Kasganj", "Kaushambi", "Kheri", "Kushinagar", "Lalitpur", "Lucknow", "Maharajganj", "Mahoba", "Mainpuri", "Mathura", "Mau", "Meerut", "Mirzapur", "Moradabad", "Muzaffarnagar", "Pilibhit", "Pratapgarh", "Prayagraj", "Raebareli", "Rampur", "Saharanpur", "Sambhal", "Sant Kabir Nagar", "Shahjahanpur", "Shamli", "Shravasti", "Siddharthnagar", "Sitapur", "Sonbhadra", "Sultanpur", "Unnao", "Varanasi"],
-  "Uttarakhand": ["Almora", "Bageshwar", "Chamoli", "Champawat", "Dehradun", "Haridwar", "Nainital", "Pauri Garhwal", "Pithoragarh", "Rudraprayag", "Tehri Garhwal", "Udham Singh Nagar", "Uttarkashi"],
-  "West Bengal": ["Alipurduar", "Bankura", "Birbhum", "Cooch Behar", "Dakshin Dinajpur", "Darjeeling", "Hooghly", "Howrah", "Jalpaiguri", "Jhargram", "Kalimpong", "Kolkata", "Malda", "Murshidabad", "Nadia", "North 24 Parganas", "Paschim Bardhaman", "Paschim Medinipur", "Purba Bardhaman", "Purba Medinipur", "Purulia", "South 24 Parganas", "Uttar Dinajpur"]
-    };
+  <div class="image-section">
+    <img src="images/form-image.png" alt="Form Image" />
+  </div>
+</div>
 
-    const stateSelect = document.getElementById("state");
-    const districtSelect = document.getElementById("district");
+<script type="module">
+// Firebase
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js";
+import { getAuth, createUserWithEmailAndPassword, updateProfile, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-auth.js";
 
-    for (let state in statesData) {
-      const option = document.createElement("option");
-      option.value = state;
-      option.textContent = state;
-      stateSelect.appendChild(option);
-    }
+const firebaseConfig = {
+  apiKey: "YOUR_API_KEY",
+  authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+  projectId: "YOUR_PROJECT_ID",
+  storageBucket: "YOUR_PROJECT_ID.appspot.com",
+  messagingSenderId: "YOUR_SENDER_ID",
+  appId: "YOUR_APP_ID"
+};
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const googleProvider = new GoogleAuthProvider();
 
-    stateSelect.addEventListener("change", function () {
-      const districts = statesData[this.value] || [];
-      districtSelect.innerHTML = '<option value="">Select District</option>';
-      districts.forEach(d => {
-        const option = document.createElement("option");
-        option.value = d;
-        option.textContent = d;
-        districtSelect.appendChild(option);
-      });
-    });
+// Elements
+const emailStartBtn = document.getElementById('emailStartBtn');
+const step1 = document.getElementById('step1');
+const step2 = document.getElementById('step2');
+const googleBtn = document.getElementById('googleSignupBtn');
+const password = document.getElementById('password');
+const confirmPassword = document.getElementById('confirmPassword');
+const passwordNote = document.getElementById('passwordNote');
+const matchNote = document.getElementById('matchNote');
+const email = document.getElementById('email');
+const fullName = document.getElementById('fullName');
 
-    const form = document.getElementById('signupForm');
-    const step1Inputs = document.querySelectorAll('#step1 input');
-    const step2Inputs = document.querySelectorAll('#step2 input, #step2 select');
-    const email = document.getElementById('email');
-    const password = document.getElementById('password');
-    const confirmPassword = document.getElementById('confirmPassword');
-    const passwordNote = document.getElementById('passwordNote');
-    const matchNote = document.getElementById('matchNote');
-    const terms = document.getElementById('terms');
+// State/District data
+const statesData = { "Andhra Pradesh": ["Anantapur","Chittoor","East Godavari"], "Uttarakhand": ["Almora","Bageshwar"], "West Bengal": ["Alipurduar","Bankura"] };
+const stateSelect = document.getElementById("state");
+const districtSelect = document.getElementById("district");
+for (let state in statesData) {
+  const opt = document.createElement("option");
+  opt.value = state;
+  opt.textContent = state;
+  stateSelect.appendChild(opt);
+}
+stateSelect.addEventListener("change", () => {
+  districtSelect.innerHTML = '<option value="">Select District</option>';
+  (statesData[stateSelect.value] || []).forEach(d => {
+    const opt = document.createElement("option");
+    opt.value = d;
+    opt.textContent = d;
+    districtSelect.appendChild(opt);
+  });
+});
 
-    function validateField(input) {
-      const value = input.value.trim();
+// Show Email Form
+emailStartBtn.addEventListener('click', () => {
+  step1.classList.add('active');
+  emailStartBtn.style.display = 'none';
+  googleBtn.style.display = 'none';
+});
 
-      if (!value) {
-        input.classList.add('invalid');
-        input.classList.remove('valid');
-        return;
-      }
+// Validation
+function validateField(input) {
+  const val = input.value.trim();
+  if (!val) {
+    input.classList.add('invalid');
+    input.classList.remove('valid');
+    return false;
+  }
+  input.classList.remove('invalid');
+  input.classList.add('valid');
+  if (input.id === 'email') {
+    const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(val);
+    input.classList.toggle('invalid', !validEmail);
+    input.classList.toggle('valid', validEmail);
+    return validEmail;
+  }
+  if (input.id === 'password') {
+    const strong = /^(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z0-9]).{6,}$/;
+    const validPass = strong.test(val);
+    passwordNote.style.display = validPass ? 'none' : 'block';
+    return validPass;
+  }
+  if (input.id === 'confirmPassword') {
+    const match = val === password.value && val !== '';
+    matchNote.style.display = match ? 'none' : 'block';
+    return match;
+  }
+  return true;
+}
 
-      input.classList.remove('invalid');
-      input.classList.add('valid');
+function togglePassword(id, btn) {
+  const field = document.getElementById(id);
+  const isVisible = field.type === 'text';
+  field.type = isVisible ? 'password' : 'text';
+  btn.classList.toggle('active', !isVisible);
+}
 
-      if (input.id === 'email') {
-        const isValid = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(value);
-        input.classList.toggle('invalid', !isValid);
-        input.classList.toggle('valid', isValid);
-      }
-
-      if (input.id === 'password') {
-        const strong = /^(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z0-9]).{6,}$/;
-        const valid = strong.test(value);
-        input.classList.toggle('invalid', !valid);
-        input.classList.toggle('valid', valid);
-        passwordNote.style.display = valid ? 'none' : 'block';
-      }
-
-      if (input.id === 'confirmPassword') {
-        const match = value === password.value && value !== '';
-        input.classList.toggle('invalid', !match);
-        input.classList.toggle('valid', match);
-        matchNote.style.display = match ? 'none' : 'block';
-      }
-    }
-
-    function togglePassword(id, btn) {
-      const field = document.getElementById(id);
-      const isVisible = field.type === 'text';
-      field.type = isVisible ? 'password' : 'text';
-      btn.classList.toggle('active', !isVisible);
-    }
-
-    function nextStep() {
+function nextStep() {
       let valid = true;
       step1Inputs.forEach(input => {
         validateField(input);
@@ -399,35 +336,23 @@
       document.getElementById('step1').classList.add('active');
     }
 
-    step1Inputs.forEach(input => {
-      input.addEventListener('blur', () => validateField(input));
-      input.addEventListener('input', () => validateField(input));
-    });
+window.togglePassword = togglePassword;
 
-    step2Inputs.forEach(input => {
-      input.addEventListener('blur', () => validateField(input));
-      input.addEventListener('change', () => validateField(input));
-    });
+// Step navigation
+window.nextStep = function() {
+  if (validateField(fullName) & validateField(email) & validateField(password) & validateField(confirmPassword)) {
+    step1.classList.remove('active');
+    step2.classList.add('active');
+  }
+}
 
-    form.addEventListener('submit', e => {
-      e.preventDefault();
-      let valid = true;
-
-      step2Inputs.forEach(input => {
-        validateField(input);
-        if (input.classList.contains('invalid')) valid = false;
-      });
-
-      if (!terms.checked) {
-        alert("Please agree to the Terms and Conditions.");
-        valid = false;
-      }
-
-      if (valid) {
-        alert("Form submitted!");
-        form.submit();
-      }
-    });
-  </script>
+// Google Auth
+googleBtn.addEventListener('click', async () => {
+  try {
+    const result = await signInWithPopup(auth, googleProvider);
+    if (result.user) window.location.href = "https://dashboard.spmusiczone.com";
+  } catch (err) { alert(err.message); }
+});
+</script>
 </body>
 </html>
